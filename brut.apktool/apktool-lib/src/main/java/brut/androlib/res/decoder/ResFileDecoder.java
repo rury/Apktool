@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.decoder;
 
 import brut.androlib.AndrolibException;
@@ -53,12 +53,16 @@ public class ResFileDecoder {
         if (extPos == -1) {
             outFileName = outResName;
         } else {
-            ext = inFileName.substring(extPos);
+            ext = inFileName.substring(extPos).toLowerCase();
             outFileName = outResName + ext;
         }
 
         try {
             if (typeName.equals("raw")) {
+                decode(inDir, inFileName, outDir, outFileName, "raw");
+                return;
+            }
+            if (typeName.equals("font") && !".xml".equals(ext)) {
                 decode(inDir, inFileName, outDir, outFileName, "raw");
                 return;
             }
@@ -106,7 +110,7 @@ public class ResFileDecoder {
         } catch (AndrolibException ex) {
             LOGGER.log(Level.SEVERE, String.format(
                     "Could not decode file, replacing by FALSE value: %s",
-                    inFileName, outFileName), ex);
+                    inFileName), ex);
             res.replace(new ResBoolValue(false, 0, null));
         }
     }

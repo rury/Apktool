@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
  */
 package brut.androlib;
 
-import brut.androlib.res.util.ExtFile;
+import brut.directory.ExtFile;
 import brut.common.BrutException;
 import brut.util.OS;
 import org.junit.AfterClass;
@@ -33,7 +34,8 @@ import static org.junit.Assert.assertTrue;
 public class BuildAndDecodeJarTest {
 
     @BeforeClass
-    public static void beforeClass() throws Exception, BrutException {
+    public static void beforeClass() throws Exception {
+        TestUtils.cleanFrameworkFile();
         sTmpDir = new ExtFile(OS.createTempDirectory());
         sTestOrigDir = new ExtFile(sTmpDir, "testjar-orig");
         sTestNewDir = new ExtFile(sTmpDir, "testjar-new");

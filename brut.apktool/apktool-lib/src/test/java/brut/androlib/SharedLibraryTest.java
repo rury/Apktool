@@ -1,6 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
- *  Copyright 2014 Connor Tumbleson <connor.tumbleson@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
  */
 package brut.androlib;
 
-import brut.androlib.res.util.ExtFile;
+import brut.directory.ExtFile;
 import brut.common.BrutException;
-import brut.directory.DirectoryException;
 import brut.util.OS;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,6 +34,7 @@ public class SharedLibraryTest {
 
     @BeforeClass
     public static void beforeClass() throws BrutException {
+        TestUtils.cleanFrameworkFile();
         sTmpDir = new ExtFile(OS.createTempDirectory());
         TestUtils.copyResourceDir(SharedLibraryTest.class, "brut/apktool/shared_libraries/", sTmpDir);
     }

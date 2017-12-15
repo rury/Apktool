@@ -15,8 +15,12 @@ bin/
 # Tmp Files
 *.kate-swp
 *~
+*.DS_Store
 
 # IntelliJ
 *.iml
 .idea/*
 /out
+
+# Patches
+*.patch

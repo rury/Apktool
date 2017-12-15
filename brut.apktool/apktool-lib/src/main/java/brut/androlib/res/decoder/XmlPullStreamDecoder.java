@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.decoder;
 
 import java.io.IOException;
@@ -94,9 +94,9 @@ public class XmlPullStreamDecoder implements ResStreamDecoder {
                         if (attr_name.equalsIgnoreCase(("package"))) {
                             resTable.setPackageRenamed(pp.getAttributeValue(i));
                         } else if (attr_name.equalsIgnoreCase("versionCode")) {
-                            resTable.addVersionInfo("versionCode", pp.getAttributeValue(i));
+                            resTable.setVersionCode(pp.getAttributeValue(i));
                         } else if (attr_name.equalsIgnoreCase("versionName")) {
-                            resTable.addVersionInfo("versionName", pp.getAttributeValue(i));
+                            resTable.setVersionName(pp.getAttributeValue(i));
                         }
                     }
                     return true;

@@ -1,6 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
- *  Copyright 2014 Connor Tumbleson <connor.tumbleson@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,9 +16,8 @@
  */
 package brut.androlib;
 
-import brut.androlib.res.util.ExtFile;
+import brut.directory.ExtFile;
 import brut.common.BrutException;
-import brut.directory.DirectoryException;
 import brut.util.OS;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -36,6 +35,7 @@ public class ProviderAttributeTest {
 
     @BeforeClass
     public static void beforeClass() throws BrutException {
+        TestUtils.cleanFrameworkFile();
         sTmpDir = new ExtFile(OS.createTempDirectory());
         TestUtils.copyResourceDir(ProviderAttributeTest.class, "brut/apktool/issue636/", sTmpDir);
     }
@@ -65,8 +65,8 @@ public class ProviderAttributeTest {
         apkDecoder.setOutDir(new File(sTmpDir + File.separator + apk + ".out.two"));
         apkDecoder.decode();
 
-        String expected = replaceNewlines("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
-                "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"com.ibotpeaches.issue636\" platformBuildVersionCode=\"22\" platformBuildVersionName=\"5.1-1756733\">\n" +
+        String expected = TestUtils.replaceNewlines("<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+                "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"com.ibotpeaches.issue636\" platformBuildVersionCode=\"23\" platformBuildVersionName=\"6.0-2438415\">\n" +
                 "    <application android:allowBackup=\"true\" android:debuggable=\"true\" android:icon=\"@mipmap/ic_launcher\" android:label=\"@string/app_name\" android:theme=\"@style/AppTheme\">\n" +
                 "        <provider android:authorities=\"com.ibotpeaches.issue636.Provider\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:label=\"@string/app_name\" android:multiprocess=\"false\" android:name=\"com.ibotpeaches.issue636.Provider\"/>\n" +
                 "        <provider android:authorities=\"com.ibotpeaches.issue636.ProviderTwo\" android:exported=\"false\" android:grantUriPermissions=\"true\" android:label=\"@string/app_name\" android:multiprocess=\"false\" android:name=\"com.ibotpeaches.issue636.ProviderTwo\"/>\n" +
@@ -75,16 +75,12 @@ public class ProviderAttributeTest {
 
 
         byte[] encoded = Files.readAllBytes(Paths.get(sTmpDir + File.separator + apk + ".out.two" + File.separator + "AndroidManifest.xml"));
-        String obtained = replaceNewlines(new String(encoded));
+        String obtained = TestUtils.replaceNewlines(new String(encoded));
         assertEquals(expected, obtained);
     }
 
     private boolean fileExists(String filepath) {
         return Files.exists(Paths.get(sTmpDir.getAbsolutePath() + File.separator + filepath));
-    }
-
-    private String replaceNewlines(String value) {
-        return value.replace("\n", "").replace("\r", "");
     }
 
     private static ExtFile sTmpDir;

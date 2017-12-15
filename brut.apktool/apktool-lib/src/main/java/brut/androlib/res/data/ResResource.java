@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,7 +14,6 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.data;
 
 import brut.androlib.AndrolibException;
@@ -23,22 +23,21 @@ import brut.androlib.res.data.value.ResValue;
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
  */
 public class ResResource {
-    private final ResConfig mConfig;
+    private final ResType mConfig;
     private final ResResSpec mResSpec;
     private final ResValue mValue;
 
-    public ResResource(ResConfig config, ResResSpec spec, ResValue value) {
+    public ResResource(ResType config, ResResSpec spec, ResValue value) {
         this.mConfig = config;
         this.mResSpec = spec;
         this.mValue = value;
     }
 
     public String getFilePath() {
-        return mResSpec.getType().getName()
-                + mConfig.getFlags().getQualifiers() + "/" + mResSpec.getName();
+        return mResSpec.getType().getName() + mConfig.getFlags().getQualifiers() + "/" + mResSpec.getName();
     }
 
-    public ResConfig getConfig() {
+    public ResType getConfig() {
         return mConfig;
     }
 

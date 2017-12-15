@@ -1,5 +1,6 @@
 /**
- *  Copyright 2014 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Ryszard Wiśniewski <brut.alll@gmail.com>
+ *  Copyright (C) 2017 Connor Tumbleson <connor.tumbleson@gmail.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,11 +14,10 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-
 package brut.androlib.res.util;
 
 import java.io.*;
-import org.xmlpull.mxp1_serializer.MXSerializer;
+import org.xmlpull.renamed.MXSerializer;
 
 /**
  * @author Ryszard Wiśniewski <brut.alll@gmail.com>
@@ -26,16 +26,14 @@ public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
     @Override
     public void startDocument(String encoding, Boolean standalone)
             throws IOException, IllegalArgumentException, IllegalStateException {
-        super.startDocument(encoding != null ? encoding : mDefaultEncoding,
-                standalone);
+        super.startDocument(encoding != null ? encoding : mDefaultEncoding, standalone);
         this.newLine();
     }
 
     @Override
-    protected void writeAttributeValue(String value, Writer out)
-            throws IOException {
+    protected void writeAttributeValue(String value, Writer out) throws IOException {
         if (mIsDisabledAttrEscape) {
-            out.write(value);
+            out.write(value == null ? "" : value);
             return;
         }
         super.writeAttributeValue(value, out);
@@ -55,8 +53,7 @@ public class ExtMXSerializer extends MXSerializer implements ExtXmlSerializer {
     }
 
     @Override
-    public void setProperty(String name, Object value)
-            throws IllegalArgumentException, IllegalStateException {
+    public void setProperty(String name, Object value) throws IllegalArgumentException, IllegalStateException {
         if (PROPERTY_DEFAULT_ENCODING.equals(name)) {
             mDefaultEncoding = (String) value;
         } else {
